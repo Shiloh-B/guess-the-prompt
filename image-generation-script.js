@@ -32,7 +32,7 @@ const imagePrompt = completion.data.choices[0].message.content;
 const res = await openai.createImage({
   prompt: imagePrompt,
   n: 1,
-  size: '1024x1024'
+  size: '512x512',
 });
 
 const image_url = res.data.data[0].url;
@@ -41,7 +41,7 @@ console.log(image_url);
 const imageRes = await imageToBase64(image_url);
 
 // create a ref to our image in cloud storage
-const imageRefInCloud = ref(storage, generationDate);
+const imageRefInCloud = ref(storage, `${generationDate}.png`);
 
 uploadString(imageRefInCloud, imageRes).then(() => {
   console.log('uploaded to cloud');
