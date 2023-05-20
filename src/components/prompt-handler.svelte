@@ -17,10 +17,19 @@
     if(indices.length) {
       const splitHiddenPrompt = hiddenPrompt.split(' ');
       indices.map((i) => {
-        if(splitHiddenPrompt[i].includes('_'))
-        splitHiddenPrompt[i] = guess;
+        if(splitHiddenPrompt[i].includes('_')) {
+          splitHiddenPrompt[i] = guess;
+        }
       });
       hiddenPrompt = splitHiddenPrompt.join(' ');
+    } else {
+      let letterIndex;
+      do {
+        letterIndex = Math.floor(Math.random() * imagePrompt.length);
+      } while(hiddenPrompt[letterIndex] !== '_');
+      let temp = hiddenPrompt.split('');
+      temp[letterIndex] = imagePrompt[letterIndex];
+      hiddenPrompt = temp.join('');
     }
     guess = '';
   }

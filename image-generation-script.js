@@ -25,7 +25,7 @@ const completion = await openai.createChatCompletion({
   messages: [{role: 'user', content: 'Create a four to six word sentence with at least one singular subject, one adjective, and one verb'}]
 });
 
-console.log(completion.data.choices[0].message);
+// console.log(completion.data.choices[0].message);
 
 const imagePrompt = completion.data.choices[0].message.content;
 
