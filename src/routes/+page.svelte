@@ -7,6 +7,8 @@
 
   let promptedImage;
   let imagePrompt;
+  let loadingMessage = 'Loading image...';
+  let guessCount = 0;
 
   onMount(async () => {
     const dateObj = new Date();
@@ -25,7 +27,7 @@
     if(docSnap.exists()) {
       imagePrompt = docSnap.data().prompt;
     } else {
-      // throw an error
+      loadingMessage = 'Oops. Something went wrong and we couldn\'t load the image :(';
     }
   })
 
@@ -34,18 +36,22 @@
 
 {#if promptedImage && imagePrompt}
 <div class='landing-container'>
-  <h1>Guess the Prompt</h1>
+  <div class='header-container'>
+    <div class='header-item'></div>
+    <h1 class='header-item'>Guess the Prompt</h1>
+    <h2 class='header-item guess-item'>Guesses: {guessCount}</h2>
+  </div>
   <img alt='generated' src={`data:image/png;base64,${promptedImage}`} />
-  <PromptHandler imagePrompt={imagePrompt} />
+  <PromptHandler imagePrompt={imagePrompt} bind:guessCount={guessCount} />
 </div>
 {:else}
 <div class='landing-container'>
-  <h1>Loading Image...</h1>
+  <h1>{loadingMessage}</h1>
 </div>
 {/if}
 
 <style>
-  p, h1, h2, h3, h4, h5 {
+  h1, h2 {
     font-family: 'Heebo', sans-serif;
   }
 
@@ -59,5 +65,21 @@
     align-items: center;
     background-color: rgb(207, 207, 207);
     height: 100%;
+  }
+
+  .header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    text-align: center;
+  }
+
+  .header-item {
+    width: 30%;
+  }
+
+  .guess-item {
+    text-align: right;
   }
 </style>

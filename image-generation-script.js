@@ -22,7 +22,7 @@ const generationDate = `${dateObj.getUTCMonth() + 1}-${dateObj.getUTCDate()}-${d
 // get our prompt
 const completion = await openai.createChatCompletion({
   model: 'gpt-3.5-turbo',
-  messages: [{role: 'user', content: 'Create a four to six word sentence with at least one singular subject, one adjective, and one verb'}]
+  messages: [{role: 'user', content: 'Create a four to six word sentence with at least one singular subject, one adjective, and one verb without using animals'}]
 });
 
 // console.log(completion.data.choices[0].message);

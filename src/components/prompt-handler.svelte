@@ -1,5 +1,7 @@
 <script>
+  import Completed from "./completed.svelte";
   export let imagePrompt;
+  export let guessCount;
 
   let hiddenPrompt;
   let guess;
@@ -31,6 +33,7 @@
       temp[letterIndex] = imagePrompt[letterIndex];
       hiddenPrompt = temp.join('');
     }
+    guessCount = guessCount + 1;
     guess = '';
   }
 
@@ -47,16 +50,18 @@
     return indices;
   }
 </script>
-
+{#if imagePrompt.toLowerCase() !== hiddenPrompt.toLowerCase()}
 <div class='prompt-container'>
   <h1 class='prompt'>{hiddenPrompt}</h1>
   <div>
     <form on:submit={guessHandler}>
       <input placeholder='Guess a word in the prompt!' bind:value={guess} type='text' />
     </form>
-    <!-- <button>Guess</button> -->
   </div>
 </div>
+{:else}
+  <Completed imagePrompt={imagePrompt} guessCount={guessCount}/>
+{/if}
 
 <style>
   .prompt-container {
@@ -79,11 +84,4 @@
     padding: .2em;
     width: 50%;
   }
-
-  /* button {
-    background: none;
-    border: 2px solid black;
-    border-radius: 5px;
-    font-size: .75em;
-  } */
 </style>
